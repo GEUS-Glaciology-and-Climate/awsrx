@@ -753,7 +753,7 @@ class AwsMessage(SbdMessage):
 
     def __init__(self, aws_sbd):
         
-        super(AwsMessage, self).__init__(aws_sbd) #is this a good pattern to call super at the top?
+        super(AwsMessage, self).__init__(aws_sbd)
 
         self.payload_fmt, self.type_len = payload_fmt, type_len  #TODO: this must come from a YAML file
 
@@ -786,7 +786,7 @@ class AwsMessage(SbdMessage):
 
         IsTooLong = False
         IsTooShort = False
-        if len(DataLine) == 0: raise AwsMessageError()            
+        if len(DataLine) == 0: raise AwsMessageError()
         if DataLine[0].isdigit() or (DataLine[0:2] == '\n"' and #special-case hack for CENT_T in 2017-2018
                                      self.data['sbd_data']['imei'] == 300234064121930):
             IsKnownBinaryFormat = False
@@ -866,7 +866,7 @@ class AwsMessage(SbdMessage):
                                 continue
                             else:
                                 ValueBytes = []
-                            for offset in range(0,ValueBytesCount):                                
+                            for offset in range(0,ValueBytesCount):
                                 ValueBytes.append(ord(BinaryMessage[BytePointer + offset]))
                             BytePointer = BytePointer + ValueBytesCount
                             Value = self.GLI4toDEC(ValueBytes)
@@ -877,7 +877,7 @@ class AwsMessage(SbdMessage):
                             DataLine = DataLine + '?'
                     elif type_letter.lower() == 'n':
                         try:
-                            for offset in range(0,2):                                
+                            for offset in range(0,2):
                                 ValueBytes.append(ord(BinaryMessage[BytePointer + offset]))
                             if self.GFP2toDEC(ValueBytes) == 8191: #the logger sends a 2-bytes NAN instead of a 4-bytes gps values when the gps data isn't available
                                 DataLine = DataLine + "NAN,"
@@ -897,7 +897,7 @@ class AwsMessage(SbdMessage):
                             DataLine = DataLine + '?'
                     elif type_letter.lower() == 'e':
                         try:
-                            for offset in range(0,2):                                
+                            for offset in range(0,2):
                                 ValueBytes.append(ord(BinaryMessage[BytePointer + offset]))
                             if self.GFP2toDEC(ValueBytes) == 8191: #the logger sends a 2-bytes NAN instead of a 4-bytes gps values when the gps data isn't available
                                 DataLine = DataLine + "NAN,"
@@ -1365,7 +1365,7 @@ def main(argv):
                         publish_to_ftp(t,
                                        accounts_ini.get('dmi_ftp', 'server'),
                                        accounts_ini.get('dmi_ftp', 'account'),
-                                       accounts_ini.get('dmi_ftp', 'password'),                             
+                                       accounts_ini.get('dmi_ftp', 'password'),
                                        #path='from_GEUS',
                                        )
                 
