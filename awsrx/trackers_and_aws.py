@@ -1321,14 +1321,14 @@ def main(argv):
                                #path='geus/mcit/to_ZAMG_Vienna',
                                #)
                 publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234061852400.txt",
-                               accounts_ini.get('zamg_ftp', 'server'), # 'ftp.zamg.ac.at',
-                               accounts_ini.get('zamg_ftp', 'account'), # 'awsgletscher',
+                               accounts_ini.get('zamg_ftp', 'server'),
+                               accounts_ini.get('zamg_ftp', 'account'),
                                password_zamg_ftp,
-                               path=accounts_ini.get('zamg_ftp', 'pz'), # 'Freya_AWS',
+                               path=accounts_ini.get('zamg_ftp', 'directory'),
                                )
                 publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234061217540.txt",
-                               accounts_ini.get('uwn_ftp', 'server'), # '158.37.32.203',
-                               accounts_ini.get('uwn_ftp', 'account'),# 'geus.dk',
+                               accounts_ini.get('uwn_ftp', 'server'),
+                               accounts_ini.get('uwn_ftp', 'account'),
                                password_uwn_ftp,
                                passive=False, # move to ini file
                                )
