@@ -57,7 +57,7 @@ from collections import OrderedDict
 #hack=True for using promice@asterix2.citterio.net if the mailserver is up
 hack = False
 
-programs_dir = '..\\logger_programs' 
+programs_dir = os.sep.join(('..', 'logger_programs'))
 
 credentials_file = "credentials.ini" # this should be somewhere secure
 accounts_ini = SafeConfigParser()
