@@ -864,6 +864,8 @@ class AwsMessage(SbdMessage):
                                 BytePointer = BytePointer + 2
                                 ExpectedMsgLen -= 2 #this is to fix the expected length of the message which is shorter when 2-bytes NAN come in instead of 4-byte gps values
                                 continue
+                            else:
+                                ValueBytes = []
                             for offset in range(0,ValueBytesCount):                                
                                 ValueBytes.append(ord(BinaryMessage[BytePointer + offset]))
                             BytePointer = BytePointer + ValueBytesCount
@@ -882,6 +884,8 @@ class AwsMessage(SbdMessage):
                                 BytePointer = BytePointer + 2
                                 ExpectedMsgLen -= 2 #this is to fix the expected length of the message which is shorter when 2-bytes NAN come in instead of 4-byte gps values
                                 continue
+                            else:
+                                ValueBytes = []
                             for offset in range(0,ValueBytesCount):
                                 ValueBytes.append(ord(BinaryMessage[BytePointer + offset]))
                             BytePointer = BytePointer + ValueBytesCount
@@ -900,6 +904,8 @@ class AwsMessage(SbdMessage):
                                 BytePointer = BytePointer + 2
                                 ExpectedMsgLen -= 2 #this is to fix the expected length of the message which is shorter when 2-bytes NAN come in instead of 4-byte gps values
                                 continue
+                            else:
+                                ValueBytes = []
                             for offset in range(0,ValueBytesCount):
                                 ValueBytes.append(ord(BinaryMessage[BytePointer + offset]))
                             BytePointer = BytePointer + ValueBytesCount
