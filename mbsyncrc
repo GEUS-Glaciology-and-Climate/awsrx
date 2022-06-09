@@ -1,0 +1,29 @@
+# fetch with
+# mbsync -V -c mbsyncrc aws
+
+IMAPAccount aws
+Host imap.gmail.com
+User geus.aws@gmail.com
+Pass # app password
+AuthMechs LOGIN 
+SSLType IMAPS
+SSLVersions TLSv1
+CertificateFile gmail.cert
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore aws-remote
+Account aws
+
+# LOCAL STORAGE
+MaildirStore aws-local
+Path ./Mail/
+Inbox AWS
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+Channel aws
+Master :aws-remote:
+Slave :aws-local:
+Patterns "*"
+Create Both
+Expunge None
+SyncState *
