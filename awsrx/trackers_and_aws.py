@@ -1275,7 +1275,7 @@ def main(argv):
     
     #print os.getcwd()
     
-    interval = 1800
+    interval = True
     
     try:
         lock = LockFile()
@@ -1304,7 +1304,7 @@ def main(argv):
         if not password_uwn_ftp:
             password_uwn_ftp = raw_input('password for Uni. West Norway ftp account: ')
             
-        while interval:
+        if interval:
             try:
                 modified_files = getmyawsdata(accounts_ini.get('aws', 'account'),
                                               password_aws,
@@ -1378,10 +1378,10 @@ def main(argv):
             except Exception, e:
                 traceback.print_exc(file=sys.stdout)
                 print time.asctime(), '- restarting in 5 minutes...'
-                time.sleep(300)
+#                time.sleep(300)
             else:
                 print 'latest data check:', time.asctime()
-                time.sleep(interval)
+#                time.sleep(interval)
         
     finally: #still skipped if shell or process are killed
         lock.release()
