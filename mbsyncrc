@@ -17,7 +17,7 @@ Account aws
 # LOCAL STORAGE
 MaildirStore aws-local
 Path ./Mail/
-Inbox AWS
+Inbox ./Mail/
 
 # CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
 Channel aws
