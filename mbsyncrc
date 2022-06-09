@@ -24,7 +24,7 @@ Channel aws
 Master :aws-remote:
 Slave :aws-local:
 Patterns "*"
-Create Near
+# Create Near
 Expunge None
 Sync Pull
 SyncState *
