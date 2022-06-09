@@ -646,7 +646,7 @@ FilterMalformed = True
 # e = GPS latitude encoded as GLI4
 # It is also possible to decode any of these in debug mode which adds to the decoded value the 
 # raw bytes as characters, as hex and as bit string, in brackets, e.g. an FP2 values of -1600 
-# will be written out as -1600(‘ @ = 0xE6 0x40 = 0b11100110 0b01000000) when using 'F' instead 
+# will be written out as -1600(Â‘ @ = 0xE6 0x40 = 0b11100110 0b01000000) when using 'F' instead 
 # of 'f'. Becasue no check is done, a line may get truncated if some special bytes are 
 # encountered, probably things like null characters, end of line, escape codes etc. I'm also 
 # not sure if/how differently it may work on python 3 or if the data file displays differently 
@@ -1370,11 +1370,11 @@ def main(argv):
                                        )
                 
                 
-                if not hack: getmytrackerdata(accounts_ini.get('trackers', 'account'),
-                                              password_trackers,
-                                              accounts_ini.get('trackers', 'server'),
-                                              accounts_ini.getint('trackers', 'port'),
-                                              )
+               # if not hack: getmytrackerdata(accounts_ini.get('trackers', 'account'),
+               #                               password_trackers,
+               #                               accounts_ini.get('trackers', 'server'),
+               #                               accounts_ini.getint('trackers', 'port'),
+               #                               )
             except Exception, e:
                 traceback.print_exc(file=sys.stdout)
                 print time.asctime(), '- restarting in 5 minutes...'
