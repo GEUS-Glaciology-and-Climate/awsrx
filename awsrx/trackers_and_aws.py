@@ -53,6 +53,7 @@ import traceback
 from ConfigParser import SafeConfigParser
 from glob import glob
 from collections import OrderedDict
+imaplib._MAXLINE = 5000000
 
 #hack=True for using promice@asterix2.citterio.net if the mailserver is up
 hack = False
