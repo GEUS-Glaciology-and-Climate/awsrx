@@ -1159,7 +1159,7 @@ def getmyawsdata(account=None,
         #resp = mail_server.list()
         #assert resp[0].upper() == 'OK'
     
-        result, data = mail_server.select(mailbox='INBOX', readonly=True)
+        result, data = mail_server.select(mailbox='[Gmail]/All Mail', readonly=True)
         print 'mailbox contains %s messages' %data[0]
         
         modified_files = {}
