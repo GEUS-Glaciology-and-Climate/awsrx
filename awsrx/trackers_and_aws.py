@@ -1312,8 +1312,13 @@ def main(argv):
                                               accounts_ini.get('aws', 'server'),
                                               accounts_ini.getint('aws', 'port'),
                                               )
+                print 'getmyawsdata successful'
+                
                 sorter(modified_files)
+                print 'sorter successful'
+                
                 tailer(modified_files, 100, 'tails')
+                print 'tailer successful'
                 
                 #publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234061852400.txt",
                                #'ftp.geus.dk',
@@ -1321,18 +1326,18 @@ def main(argv):
                                #'geus',
                                #path='geus/mcit/to_ZAMG_Vienna',
                                #)
-                publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234061852400.txt",
-                               accounts_ini.get('zamg_ftp', 'server'),
-                               accounts_ini.get('zamg_ftp', 'account'),
-                               password_zamg_ftp,
-                               path=accounts_ini.get('zamg_ftp', 'directory'),
-                               )
-                publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234061217540.txt",
-                               accounts_ini.get('uwn_ftp', 'server'),
-                               accounts_ini.get('uwn_ftp', 'account'),
-                               password_uwn_ftp,
-                               passive=False, # move to ini file
-                               )
+                #publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234061852400.txt",
+                               #accounts_ini.get('zamg_ftp', 'server'),
+                               #accounts_ini.get('zamg_ftp', 'account'),
+                               #password_zamg_ftp,
+                               #path=accounts_ini.get('zamg_ftp', 'directory'),
+                               #)
+                #publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234061217540.txt",
+                               #accounts_ini.get('uwn_ftp', 'server'),
+                               #accounts_ini.get('uwn_ftp', 'account'),
+                               #password_uwn_ftp,
+                               #passive=False, # move to ini file
+                               #)
                 #publish_to_ftp(r"O:\AWSmessages_current\aws_data\AWS_300234064121930*.txt",
                                #'ftp.geus.dk',
                                #'geus',
@@ -1351,24 +1356,24 @@ def main(argv):
                                #'geus',
                                #path='geus/mcit/to_GlacioBasis_Nuuk',
                                #)
-                all_aws_tails = glob('\\\\geusnt1\\glaciologi\\AWSmessages_current\\aws_data\\tails\\*.txt')
-                exclude_patterns = ['-F.txt',
-                                    '-D.txt',
-                                    'UWN_AWS',
-                                    'ZAMG_AWS',
-                                    'NUK_K_AWS',
-                                    'XXX_AWS',
-                                    'ZAK_'] # FIXME: why were these excluded?
-                for t in all_aws_tails:
-                    if any(map(t.count, exclude_patterns)):
-                        continue
-                    else:
-                        publish_to_ftp(t,
-                                       accounts_ini.get('dmi_ftp', 'server'),
-                                       accounts_ini.get('dmi_ftp', 'account'),
-                                       accounts_ini.get('dmi_ftp', 'password'),
-                                       #path='from_GEUS',
-                                       )
+                #all_aws_tails = glob('\\\\geusnt1\\glaciologi\\AWSmessages_current\\aws_data\\tails\\*.txt')
+                #exclude_patterns = ['-F.txt',
+                #                    '-D.txt',
+                #                    'UWN_AWS',
+                #                    'ZAMG_AWS',
+                #                    'NUK_K_AWS',
+                #                    'XXX_AWS',
+                #                    'ZAK_'] # FIXME: why were these excluded?
+                #for t in all_aws_tails:
+                #    if any(map(t.count, exclude_patterns)):
+                #        continue
+                #    else:
+                #        publish_to_ftp(t,
+                #                       accounts_ini.get('dmi_ftp', 'server'),
+                #                       accounts_ini.get('dmi_ftp', 'account'),
+                #                       accounts_ini.get('dmi_ftp', 'password'),
+                #                       #path='from_GEUS',
+                #                       )
                 
                 
                # if not hack: getmytrackerdata(accounts_ini.get('trackers', 'account'),
