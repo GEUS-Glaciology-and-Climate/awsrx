@@ -13,7 +13,7 @@ This also provides a backup of the transmitted data, which should be saved becau
 *** Installation
 + Note - due to the >1M messages in the GMail inbox, the default installation of `isync` cannot fetch all the messages. I have installed `isync-1.4.4` on this server. Installation was straightforward. Download, untar/gzip, and then `make; sudo make install`. Everyone should therefore have access to this version
 
-#+BEGIN_SRC bash :results verbatim :results both
+#+BEGIN_SRC bash :results verbatim :exports both
 which mbsync
 mbsync --version
 #+END_SRC
