@@ -1,0 +1,54 @@
+
+* AWSRX cleanup
+
+This branch of awsrx aims to simplify the code.
+
++ Fetching and decoding are separated
++ Offload work to 3rd parties where possible.
+  + We use the common and supported tool `mbsync` (from the `isync` package) to fetch the raw email from GMail.
+
+This also provides a backup of the transmitted data, which should be saved because it is at a lower level than the decoded data, which can always be recreated.
+
+** mbsync (fetch)
+*** Installation
++ Note - due to the >1M messages in the GMail inbox, the default installation of `isync` cannot fetch all the messages. I have installed `isync-1.4.4` on this server. Installation was straightforward. Download, untar/gzip, and then `make; sudo make install`. Everyone should therefore have access to this version
+
+#+BEGIN_SRC bash :results verbatim
+which mbsync
+mbsync --version
+#+END_SRC
+
+#+RESULTS:
+: /usr/local/bin/mbsync
+: isync 1.4.4
+
+*** Configure
+
++ The `mbsync` configuration is in [[./mbsyncrc]].
++ An app password for the gmail account should be placed in a file named `secret` in the current folder
++ A `gmail.cert` file should be created by running the following command and pasting the output into file `gmail.cert`
+#+BEGIN_SRC bash
+openssl s_client -starttls smtp -connect smtp.gmail.com:587 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p'
+#+END_SRC
+
+*** Downloading mail
+
+Mail is fetched by running
+
+`mbsync -V -c mbsyncrc aws`
+
+The initial fetch takes a few days because there are >1M messages on the server. It also occasionally times out or crashes. To fetch everything initially you could run
+
+#+BEGIN_SRC bash
+for i in $(seq 20); do mbsync -V -c mbsyncrc aws; done # run it 20x
+#+END_SRC
+
+Subsequent updates take ~7 minutes because of the number of messages on the server.
+
+Mail is placed into `./Mail/[Gmail]/All Mail/new` if unread, or `./Mail/[Gmail]/All Mail/cur` if read.
+
+Changes to the `mbsynrc` file can probably configure this so that all messages go to one folder, and folder names are simplified (e.g., no `[` or `]`).
+
+** Decode
+
+To do.

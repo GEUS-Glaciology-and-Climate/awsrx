@@ -1,5 +1,3 @@
-# 1) put app password in file 'secret'
-# 2) Fetch with: mbsync -V -c mbsyncrc aws
 
 IMAPAccount aws
 Host imap.gmail.com
@@ -16,15 +14,17 @@ Account aws
 
 # LOCAL STORAGE
 MaildirStore aws-local
+SubFolders Verbatim
 Path ./Mail/
 Inbox ./Mail/
 
 # CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
 Channel aws
-Master :aws-remote:
-Slave :aws-local:
-Patterns "*"
-# Create Near
+Far :aws-remote:
+Near :aws-local:
+Patterns "[Gmail]/All Mail"
+Create Both
 Expunge None
 Sync Pull
 SyncState *
+

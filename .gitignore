@@ -1,4 +1,7 @@
 # private data
+Mail/
+secret
+gmail.cert
 accounts.ini
 credentials.ini
 
