@@ -13,17 +13,17 @@ Some basic unit testing is available with `tx.py`, which can be executed by runn
 python -m unittest tx.py
 ```
 
-## Design
+## Workflow design
 
 The workflow in `tx.py` fetches messages over IMAP sent from the Iridium SBD service. These messages are decoded from the binary format transmitted by the AWS, and appends each dataline to the corresponding station that transmitted it (based on the modem number, `imei`). 
 
 The workflow is object-oriented to handle each component needed to fetch and decode messages.
 
-![tx_workflow](https://github.com/GEUS-Glaciology-and-Climate/awsrx/tree/obj/figs/tx_design.png)
+![tx_workflow](https://raw.githubusercontent.com/GEUS-Glaciology-and-Climate/awsrx/obj/figs/tx_design.png)
 
 1. `PayloadFormat` handles the message types and formatting templates. These can be imported from file, with the two .csv files in the `payload_formatter` currently used. These used to be hardcoded in the script, but it seemed more appropriate to store them in files
 
-2. `SbdMessage` handles the SBD message, either taken from email or from .sbd file (half completed, still being developed)
+2. `SbdMessage` handles the SBD message, either taken from an `email.message.Message` object or a .sbd file (half completed, still being developed)
 
 3. `EmailMessage` handles the email message (that the SBD message is attached to) to parse information such as sender, subject, date, and to check for attachments. The `EmailMessage` inherits from the `SbdMessage` object, as the SBD message is part of the email. Previously this was the opposite which, although followed the workflow steps, was unintuitive for the object-oriented workflow design
 
@@ -35,7 +35,7 @@ To reprocess old messages, these can be retrieved from the mailbox by rolling ba
 
 ## Future development
 
-![pypromice](https://github.com/GEUS-Glaciology-and-Climate/awsrx/tree/obj/figs/pypromice_prelim.png)
+![pypromice](https://raw.githubusercontent.com/GEUS-Glaciology-and-Climate/awsrx/obj/figs/pypromice_prelim.png)
 
 The `tx.py` script here will form a module as part of a bigger package. This package will be the go-to tool for handling and processing PROMICE and GC-Net datasets, available through pip and conda-forge, perhaps even across platforms such as R and Matlab. For now, I think a good name would be `pypromice`, but this is open for suggestions. Functionality would be pulled and compiled from many repositories, including:
 
@@ -62,6 +62,8 @@ The `tx.py` script here will form a module as part of a bigger package. This pac
 
 - [ ] Decide whether a CR1000 logger program should be used to define the transmitted message. This used to be half-implemented to detect the data field in the received message, and then was only used for adding column header names to the outputted datalines (and wasn't 100% reliable) 
 
-- [ ] `Payload.payload_type` currently defines the character (e.g. `t`, `f`) within a message, along with the number of bytes per character. In the script, information such as NaN values, formatting and processing ocuurs based on the character. Instead of being in the script, these could be defined in the `payload_type.csv` file and become part of the `PayloadFormat` object
+- [ ] `Payload.payload_type` currently defines the character (e.g. `t`, `f`) within a message, along with the number of bytes per character. In the script, information such as NaN values, formatting and processing occurs based on the character. Instead of being in the script, these could be defined in the `payload_type.csv` file and become part of the `PayloadFormat` object
+
+- [ ] Take the `PayloadFormatter` attributes `Payload.payload_format` and `Payload.payload_type` out of dictionary types (`dict`), and retain the key values as individual attributes where possible. This has been done with the `Emailmessage` and `SBDmessage` objects already, and makes it easier and more accessible for fresh eyes 
 
 
