@@ -118,12 +118,8 @@ class SbdMessage(object):
         
         # Get attachment information                                           #TODO read from downloaded file as alternative to attachment                  
         if attach:
-            if isinstance(attach, email.message.Message):
-                if self.checkAttachment(attach) and self.checkAttachmentName(attach.get_filename()): 
-                    self.payload = self.getPayloadFromEmail(attach, self.msg_size)
-            elif isinstance(attach, str):
-                if self.checkAttachmentName(attach):
-                    self.payload = self.getPayloadFromFile(attach)
+            if self.checkAttachment(attach) and self.checkAttachmentName(attach.get_filename()): 
+                self.payload = self.getPayloadFromEmail(attach, self.msg_size)
             else:
                 self.payload = None
         else:
@@ -693,6 +689,37 @@ def getMail(mail_server, last_uid=1):
             # Yield raw mail body
             yield message_uid.decode(), data[0][1].decode() 
 
+def loadMsg(fname):
+    '''Load .msg email file into format compatible with EmailMessage and 
+    SbdMessage objects
+    
+    Parameters
+    ----------
+    fname : str
+        File path to .msg file
+    
+    Returns
+    -------
+    email.message.Message
+        Email message object
+    '''
+    with open(fname, 'rb') as f:
+        byte = f.read()
+    return email.message_from_bytes(byte)
+
+def saveMsg(msg, fname):
+    '''Save email message object to .msg file
+    
+    Parameters
+    ----------
+    msg : email.message.Message
+        Email object to save to file
+    fname : str
+        File path to outputted .msg file
+    '''
+    with open(fname, 'wb') as fp:
+        fp.write(bytes(msg))
+    
 def readSBD(sbd_file):
     '''Read encoded .sbd transmission file
     
@@ -796,19 +823,29 @@ def addTail(in_file, out_dir, aws_name, header_names='', lines_limit=100):
 class TestTX(unittest.TestCase): 
     def testPayloadFormat(self):
         '''Test PayloadFormat object initialisation'''
-        f1 = 'test/test_payload_formats.csv'
-        f2 = 'test/test_payload_types.csv'
-        self.p = PayloadFormat(f1, f2)
-        self.assertTrue(self.p.payload_format[30][0]==12)
+        p = PayloadFormat('test/test_payload_formats.csv', 
+                          'test/test_payload_types.csv')
+        self.assertTrue(p.payload_format[30][0]==12)
     
-    def testSbdMessage(self):    
-        '''Test SbdMessage object initialisation from .sbd file'''
-        sbd_file = 'test/300234066310260_014248_recog_test.sbd'        
-        self.sbd = SbdMessage(None, sbd_file, imei=sbd_file.split('_')[0].split('/'))
-        self.assertIsNotNone(self.sbd.payload)
-    
-    # def testL0tx(self):                                                      #TODO add L0tx test with recognised and unrecognised transmissions
-    #     self.sbd
-    
+    def testEmailMessage(self):   
+        '''Test EmailMessage object initialisation from .msg file'''
+        m = loadMsg('test/test_email')
+        e = EmailMessage(m, sender_name='sbdservice')
+        self.assertEquals(e.momsn, 36820)
+        self.assertEquals(e.msg_size, 27)
+        self.assertTrue(e.imei in '300234061165160')
+        self.assertFalse(e.mtmsn)
+        
+    def testL0tx(self):
+        '''Test L0tx object initialisation'''
+        m = loadMsg('test/test_email')
+        l0 = L0tx(m, 'test/test_payload_formats.csv',
+                 'test/test_payload_types.csv')
+        self.assertTrue(l0.bin_valid)
+        self.assertEquals(l0.bin_val, 12)
+        self.assertTrue('tfffffffffff' in l0.bin_format)
+        self.assertTrue('2022-07-25 10:00:00' in l0.msg)
+        self.assertFalse('?' in l0.msg)
+            
 if __name__ == "__main__":  
     unittest.main()

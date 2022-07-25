@@ -52,13 +52,13 @@ The `tx.py` script here will form a module as part of a bigger package. This pac
 
 - [X] Re-structure workflow and migrate hard-coded attributes to file
 
-- [ ] Finalise and check initialising `SbdMessage` and `EmailMessage` from .sbd file
+- [X] Finalise and check initialising `SbdMessage` and `EmailMessage` from email file
 
 - [ ] Check the `RAWtoSTR` decoder function. The other decoder functions (`GFP2toDEC` and `GLI4toDEC`) have been migrated and tested, but I have yet to come across a message that requires the `RAWtoSTR` decoder.
 
 - [ ] Clean up the `L0tx.getDataLine()` function, as this is pretty long-winded. This function does all of the decoding of an SBD message payload (`SBDmessage.payload`), and was migrated from the old `AWSmessage.parse_aws()` function
 
-- [ ] Instead of relying on IMEI numbers, we could identify which stations is transmitting by looking at `SbdMessage.unit_location`
+- [ ] As well as relying on IMEI numbers, we could identify which stations is transmitting by looking at `SbdMessage.unit_location`
 
 - [ ] Decide whether a CR1000 logger program should be used to define the transmitted message. This used to be half-implemented to detect the data field in the received message, and then was only used for adding column header names to the outputted datalines (and wasn't 100% reliable) 
 

@@ -36,7 +36,7 @@ uid_file = 'last_aws_uid.ini'
 # print('parsing %s for message formats' % programs_dir)  
 
 # Set output file directory
-out_dir = os.sep.join(('..', 'aws_data_new'))
+out_dir = 'aws_data_new'
 if not os.path.exists(out_dir):
     os.mkdir(out_dir)
 
