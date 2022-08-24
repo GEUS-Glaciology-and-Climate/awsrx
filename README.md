@@ -1,5 +1,7 @@
 # AWS L0 transmission (L0tx) processing
  
+**This repo has now been migrated and merged with [pypromice](https://github.com/GEUS-Glaciology-and-Climate/pypromice). Please check pypromice for more recent updates (after July 2022)**
+
 Receive and decode transmissions from PROMICE automatic weather stations.
 
 
